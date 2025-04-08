@@ -1,4 +1,5 @@
 # Project Setup
+This integration is meant to the integrate Sotogrande La Reserva.
 
 ```sh
 npm install dotenv
