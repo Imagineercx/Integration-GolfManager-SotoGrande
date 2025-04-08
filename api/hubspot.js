@@ -126,14 +126,14 @@ async function searchContactByIdMbudo(idMbudo, maxRetries = 5, delay=1000) {
             {
                 filters: [
                     {
-                        propertyName: 'gm_id', // Custom property used as unique identifier
+                        propertyName: 'gm_id_unique', // Custom property used as unique identifier
                         operator: 'EQ',
                         value: idMbudo,
                     },
                 ],
             },
         ],
-        properties: ['firstname', 'email', 'phone', 'gm_id'], // Properties to fetch
+        properties: ['firstname', 'email', 'phone', 'gm_id_unique'], // Properties to fetch
     };
 
     let logId;
@@ -207,7 +207,7 @@ async function updateContactInHubSpot(contactId, contact, hubspotTags, clientNam
             email: validateEmail(contact.email)  || '',
             gender: genderMapping[contact.gender] || '',
             gm_hasapp: contact.hasApp || '',
-            gm_id: contact.id,
+            gm_id_unique: contact.id,
             gm_createuser: contact.idCreateUser || '',
             gm_groupid: contact.idGroup || '',
             gm_invoicesemail : contact.idInvoiceClient || '',
@@ -275,7 +275,7 @@ async function createContactInHubSpot(contact, hubspotTags, clientName, retries 
             email: validateEmail(contact.email) || '',
             gender: genderMapping[contact.gender] || '',
             gm_hasapp: contact.hasApp || '',
-            gm_id: contact.id,
+            gm_id_unique: contact.id,
             gm_createuser: contact.idCreateUser || '',
             gm_groupid: contact.idGroup || '',
             gm_invoicesemail : contact.invoicesEmail || '',
@@ -353,7 +353,7 @@ async function searchDealByIdMbudo(idMbudo,delay=1000) {
                 {
                     filters: [
                         {
-                            propertyName: 'gm_id_reserva',
+                            propertyName: 'gm_id_reserva_unique',
                             operator: 'EQ',
                             value: idMbudo,
                         },
@@ -364,7 +364,7 @@ async function searchDealByIdMbudo(idMbudo,delay=1000) {
                 'gm_beneficiarynationality', 'gm_canceldate', 'gm_canceled', 
                 'gm_checkin', 'gm_clientgroupname', 'gm_clientname', 
                 'gm_confirmdate', 'gm_createdate', 'gm_end', 'gm_familyname', 
-                'gm_id_reserva', 'gm_idbeneficiary', 'gm_idbeneficiarygroup', 
+                'gm_id_reserva_unique', 'gm_idbeneficiary', 'gm_idbeneficiarygroup', 
                 'gm_idclient', 'gm_idclientgroup', 'gm_idfamily', 'gm_idgroup', 
                 'gm_idproduct', 'gm_idresource', 'gm_idsale', 'gm_idsaleline', 
                 'gm_idsubfamily', 'gm_idtype', 'gm_name', 'gm_nationality', 
@@ -415,7 +415,7 @@ async function createDealInHubSpot(dealData) {
             gm_createdate: convertToMidnightUTC(dealData.createDate) || "",
             gm_end: convertToMidnightUTC(dealData.end) || "",
             gm_familyname: dealData.familyName || "",
-            gm_id_reserva: dealData.id || "",
+            gm_id_reserva_unique: dealData.id || "",
             gm_idbeneficiary: dealData.idBeneficiary || "",
             gm_idbeneficiarygroup: dealData.idBeneficiaryGroup || "",
             gm_idclient: dealData.idClient || "",
@@ -440,8 +440,8 @@ async function createDealInHubSpot(dealData) {
             amount: dealData.total || 0,
             createdate: convertToMidnightUTC(dealData.createDate) || "",
             closedate: dealData.checkin ? convertToMidnightUTC(dealData.end) : "", // Optional: Close date
-            dealstage: getDealStage(dealData) || '995617343', // Required: Deal stage
-            pipeline: '678993738', // Required: Pipeline
+            dealstage: getDealStage(dealData) || '1004800024', // Required: Deal stage
+            pipeline: '686268534', // Required: Pipeline
         },
     };
 
@@ -491,7 +491,7 @@ async function updateDealInHubSpot(dealId, dealData) {
             gm_createdate: convertToMidnightUTC(dealData.createDate) || "",
             gm_end: convertToMidnightUTC(dealData.end) || "",
             gm_familyname: dealData.familyName || "",
-            gm_id_reserva: dealData.id || "",
+            gm_id_reserva_unique: dealData.id || "",
             gm_idbeneficiary: dealData.idBeneficiary || "",
             gm_idbeneficiarygroup: dealData.idBeneficiaryGroup || "",
             gm_idclient: dealData.idClient || "",
@@ -557,14 +557,14 @@ async function searchCompanyByIdMbudo(idMbudo, maxRetries = 5, delay=1000) {
             {
                 filters: [
                     {
-                        propertyName: 'gm_id', // Custom property used as unique identifier
+                        propertyName: 'gm_id_unique', // Custom property used as unique identifier
                         operator: 'EQ',
                         value: idMbudo,
                     },
                 ],
             },
         ],
-        properties: ['name', 'gm_email', 'gm_id'], // Properties to fetch
+        properties: ['name', 'gm_email', 'gm_id_unique'], // Properties to fetch
     };
 
     let logId;
@@ -624,7 +624,7 @@ async function createCompanyInHubSpot(companyData, domain, retries = 10, delay =
         properties: {
             name: companyData.name || '',
             gm_email: companyData.email || '', // Optional email property
-            gm_id: companyData.id, // Custom property for unique ID
+            gm_id_unique: companyData.id, // Custom property for unique ID
             domain: domain || '', // Domain property
         },
     };
@@ -688,13 +688,12 @@ async function createCompanyInHubSpot(companyData, domain, retries = 10, delay =
     }
 }
 
-
 async function updateCompanyInHubSpot(companyId, companyData) {
     const payload = {
         properties: {
             name: companyData.name || '',
             gm_email: companyData.email || '',
-            gm_id: companyData.id || '',
+            gm_id_unique: companyData.id || '',
         },
     };
     let logId;
@@ -810,14 +809,14 @@ function convertToMidnightUTC(dateString) {
 
 function getDealStage(dealData) {
     if (dealData.canceled || dealData.noshow) {
-        return "995617347";
+        return "1004800026";
     } else if (dealData.checkin) {
-        return "995617346";
+        return "1004800025";
     } else if(dealData.confirmDate){
-        return "995617343"
+        return "1004800024"
     }
     // Fallback to a default stage if none match
-    return "995617341"; // Change this if there’s a different fallback stage
+    return "1004800023"; // Change this if there’s a different fallback stage
 }
 
 function getCompanyDomainFromEmail(email) {

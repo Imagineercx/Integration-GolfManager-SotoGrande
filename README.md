@@ -1,5 +1,10 @@
 # Project Setup
 
+```sh
+npm install dotenv
+```
+
+
 To install the necessary dependencies, run the following commands:
 
 ```sh
